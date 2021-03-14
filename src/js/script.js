@@ -155,7 +155,7 @@
           const optWanted = '.' + paramId + '-' + optionId;
           const optionImage = thisProduct.imageWrapper.querySelector(optWanted);
           console.log('optWanted: ', optWanted);
-          console.log('optionImage: ', optionImage)
+          console.log('optionImage: ', optionImage);
           if(optionImage){
             if(optionSelected){
               optionImage.classList.add(classNames.menuProduct.imageVisible);
