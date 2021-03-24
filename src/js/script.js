@@ -106,33 +106,34 @@
     getElements(){
       const thisProduct = this;
 
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
+      thisProduct.dom = {};
+      thisProduct.dom.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.dom.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.dom.formInputs = thisProduct.dom.form.querySelectorAll(select.all.formInputs);
+      thisProduct.dom.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.dom.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.dom.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.dom.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
       
     initAmountWidget(){
       const thisProduct = this;
-      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      thisProduct.amountWidgetElem.addEventListener('updated', function () {
+      thisProduct.amountWidget = new AmountWidget(thisProduct.dom.amountWidgetElem);
+      thisProduct.dom.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
       });
     }
       
     initAccordion(){
       const thisProduct = this;
-      thisProduct.accordionTrigger.addEventListener('click', function(event) {
+      thisProduct.dom.accordionTrigger.addEventListener('click', function(event) {
         /* prevent default action for event */
         event.preventDefault();
         /* find active product (product that has active class) */
-        const activeProduct = document.querySelector('.product.active');
+        let activeProduct = document.querySelector(classNames.menuProduct.wrapperActive);
         /* if there is active product and it's not thisProduct.element, remove class active from it */
         if(activeProduct !== null && activeProduct !== thisProduct.element){
-          activeProduct.classList.remove('active');
+          activeProduct.classList.remove(classNames.menuProduct.wrapperActive);
         }
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
@@ -141,18 +142,18 @@
       
     initOrderForm(){
       const thisProduct = this;
-      thisProduct.form.addEventListener('submit', function(event){
+      thisProduct.dom.form.addEventListener('submit', function(event){
         event.preventDefault();
         thisProduct.processOrder();
       });
 
-      for(let input of thisProduct.formInputs){
+      for(let input of thisProduct.dom.formInputs){
         input.addEventListener('change', function(){
           thisProduct.processOrder();
         });
       }
 
-      thisProduct.cartButton.addEventListener('click', function(event){
+      thisProduct.dom.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
         thisProduct.addToCart();
@@ -162,7 +163,7 @@
     processOrder(){
       const thisProduct = this;
       // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
-      const formData = utils.serializeFormToObject(thisProduct.form);
+      const formData = utils.serializeFormToObject(thisProduct.dom.form);
       //console.log('formData: ', formData);
       //set price to default price
       let price = thisProduct.data.price;
@@ -191,7 +192,7 @@
           }
           
           const optWanted = '.' + paramId + '-' + optionId;
-          const optionImage = thisProduct.imageWrapper.querySelector(optWanted);
+          const optionImage = thisProduct.dom.imageWrapper.querySelector(optWanted);
           //console.log('optWanted: ', optWanted);
           //console.log('optionImage: ', optionImage);
           if(optionImage){
@@ -204,7 +205,8 @@
         }
       }
       thisProduct.priceSingle = price;
-      thisProduct.priceElem.innerHTML = price;
+      price *= thisProduct.amountWidget.value;
+      thisProduct.dom.priceElem.innerHTML = price;
     }
       
     addToCart(){
@@ -281,9 +283,9 @@
       /* TODO: Add validation */
       if(newValue !== thisWidget.value && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
         thisWidget.value = newValue;
-        thisWidget.input.value = thisWidget.value;
         thisWidget.announce();
       }
+      thisWidget.input.value = thisWidget.value;
     }
     
     initActions(){
@@ -328,9 +330,10 @@
       thisCart.dom.toggleTrigger = element.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = element.querySelector(select.cart.productList);
       thisCart.dom.deliveryFee = element.querySelector(select.cart.deliveryFee);
-      thisCart.dom.subTotalPrice = element.querySelector(select.cart.subTotalPrice);
+      thisCart.dom.subTotalPrice = element.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = element.querySelectorAll(select.cart.totalPrice);
       thisCart.dom.totalNumber = element.querySelector(select.cart.totalNumber);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
     }
       
     initActions(){
@@ -358,33 +361,30 @@
     update(){
       const thisCart = this;
 
-      thisCart.deliveryFee =  settings.cart.defaultDeliveryFee;
-      thisCart.totalNumber = [0];
-      thisCart.subTotalPrice = [0];
+      thisCart.deliveryFee = settings.cart.defaultDeliveryFee;
 
-      for(let product of thisCart.products){
-        thisCart.totalNumber += product.amount; 
-        thisCart.subTotalPrice += product.price;
-      }
-    
-    
+      thisCart.totalNumber = 0;
+      thisCart.subTotalPrice = 0;
 
-      if (thisCart.subTotalPrice > 0){
-        thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-        thisCart.dom.deliveryFee.innerHTML =thisCart.deliveryFee;
-        for(let elem of thisCart.dom.totalPrice){
-          elem.innerHTML = thisCart.totalPrice;
-          //thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;   
-          thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
-          thisCart.dom.subTotalPrice.innerHTML = thisCart.subTotalPrice;
-          thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-        }
-      }else{
-        thisCart.totalPrice = 0;
-        thisCart.deliveryFee = 0;
+      for (let product of thisCart.products) {
+        thisCart.totalNumber += product.amount;
+        thisCart.subTotalPrice = thisCart.subTotalPrice + product.price;
       }
       thisCart.dom.subTotalPrice.innerHTML = thisCart.subTotalPrice;
-      thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;  
+      thisCart.totalPrice = thisCart.deliveryFee + thisCart.subTotalPrice;
+ 
+      if (thisCart.subTotalPrice > 0) {
+        thisCart.dom.deliveryFee.innerHTML = thisCart.deliveryFee;
+        for (let totalPrice of thisCart.dom.totalPrice) {
+          totalPrice.innerHTML = thisCart.totalPrice;
+          thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
+        }
+      } else {
+        thisCart.dom.deliveryFee.innerHTML = 0;
+        for (let totalPrice of thisCart.dom.totalPrice) {
+          totalPrice.innerHTML = 0;
+        }
+      }
     }
   }
     
@@ -395,7 +395,7 @@
       thisCartProduct.name = menuProduct.name;
       thisCartProduct.amount = menuProduct.amount;
       thisCartProduct.priceSingle = menuProduct.priceSingle;
-      thisCartProduct.price = menuProduct.price * menuProduct.amount;
+      thisCartProduct.price = menuProduct.priceSingle * menuProduct.amount;
       thisCartProduct.params = menuProduct.params;
       thisCartProduct.inputValue = element.querySelector(select.widgets.amount.input);
       thisCartProduct.getElements(element);
