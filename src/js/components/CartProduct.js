@@ -10,7 +10,7 @@ class CartProduct{
     thisCartProduct.priceSingle = menuProduct.priceSingle;
     thisCartProduct.price = menuProduct.priceSingle * menuProduct.amount;
     thisCartProduct.params = menuProduct.params;
-    thisCartProduct.inputValue = element.querySelector(select.widgets.amount.input);
+    //thisCartProduct.inputValue = element.querySelector(select.widgets.amount.input);
     thisCartProduct.getElements(element);
     thisCartProduct.initAmountWidget();
     thisCartProduct.initActions();

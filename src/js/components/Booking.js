@@ -19,7 +19,7 @@ class Booking{
     
     thisBooking.dom = {}; 
     
-    thisBooking.dom.wrapper = element; //document.querySelector(select.containerOf.booking);
+    thisBooking.dom.wrapper = document.querySelector(select.containerOf.booking);
     thisBooking.dom.wrapper.innerHTML = generatedHTML;
 
     
@@ -41,8 +41,7 @@ class Booking{
     thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
     console.log('thisBooking.hourPicker', thisBooking.hourPicker);
 
-    thisBooking.dom.wrapper.addEventListener('updated', function(event){
-      event.preventDefault();
+    thisBooking.dom.wrapper.addEventListener('updated', function(){
     });
   }
 }
