@@ -51,6 +51,8 @@ export const select = {
     formSubmit: '.cart__order [type="submit"]',
     phone: '[name="phone"]',
     address: '[name="address"]',
+    starters: '[name="starter"]',
+    bookForm: '.booking-form',
   },
   cartProduct: {
     amountWidget: '.widget-amount',
@@ -62,6 +64,7 @@ export const select = {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
     tables: '.floor-plan .table',
+    floor: '.floor-plan',
   },
   nav: {
     links: '.main-nav a',
@@ -79,6 +82,7 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    tableToBooked: 'selected',
   },
   nav: {
     active: 'active',
