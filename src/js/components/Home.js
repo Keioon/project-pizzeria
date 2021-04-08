@@ -1,7 +1,7 @@
 import {templates, select} from '../setting.js';
 import {app} from '../app.js';
-//import Flickity from '../flickity.pkgd.min.js';
-
+//import Flickity from './flickity.pkgd.min.js';
+//import Flickity from '/vendor/flickity.pkgd.min.js';
 
 class Home{
   constructor(element){
@@ -30,8 +30,8 @@ class Home{
   /*initWidgets(){
     const thisHome = this;
     thisHome.carousel = document.querySelector(select.widets.home.carousel);
-    thisHome.flickity = new Flickity(thisHome.element, {
-      cellAlign: 'left',
+    thisHome.flickity = new Flickity(thisHome.carousel, {
+      cellAlign: 'right',
       contain: 'true',
       autoPlay: 'true',
       prevNextButtons: false,

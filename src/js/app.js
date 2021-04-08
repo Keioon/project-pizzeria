@@ -103,7 +103,7 @@ export const app = {
   initHome: function(){
     const thisApp = this;
     const homeElem = document.querySelector(select.containerOf.home);
-    thisApp.homr = new Home(homeElem);
+    thisApp.home = new Home(homeElem);
   },
 
   init: function(){
