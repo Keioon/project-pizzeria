@@ -315,6 +315,7 @@ class Booking{
     };
 
     fetch(url, options);
+    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
   }
 }
 
