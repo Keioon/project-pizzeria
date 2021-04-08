@@ -1,16 +1,14 @@
+/* global Flickity */
 import {templates, select} from '../setting.js';
 import {app} from '../app.js';
-//import Flickity from './flickity.pkgd.min.js';
-//import Flickity from '/vendor/flickity.pkgd.min.js';
 
 class Home{
   constructor(element){
     const thisHome = this;
 
     thisHome.render(element);
-    // thisHome.initWidgets();
+    thisHome.initWidgets();
 
-    thisHome.initActions();
     thisHome.navigate();
   }
 
@@ -23,13 +21,12 @@ class Home{
     thisHome.dom.wrapper = element;
     thisHome.dom.wrapper.innerHTML = generatedHTML;
 
-    thisHome.dom.orderOnline = document.querySelector(select.home.order);
-    thisHome.dom.bookTable = document.querySelector(select.home.table);
+    thisHome.dom.links = document.querySelectorAll(select.home.links);
   }
 
-  /*initWidgets(){
+  initWidgets(){
     const thisHome = this;
-    thisHome.carousel = document.querySelector(select.widets.home.carousel);
+    thisHome.carousel = document.querySelector(select.widgets.home.carousel);
     thisHome.flickity = new Flickity(thisHome.carousel, {
       cellAlign: 'right',
       contain: 'true',
@@ -37,32 +34,11 @@ class Home{
       prevNextButtons: false,
       wrapAround: true,
     });
-  }*/
-
-  initActions(){
-    const thisHome = this;
-
-    thisHome.dom.orderOnline.addEventListener('click', function(event){
-      event.preventDefault();
-    });
-
-    thisHome.dom.bookTable.addEventListener('click', function(event){
-      event.preventDefault();
-    });
   }
 
   navigate(){
     const thisHome = this;
-
-    thisHome.dom.bookTable.addEventListener('click', function(){
-      app.activatePage('booking');
-      window.location.hash = '/#booking';
-    });
-
-    thisHome.dom.orderOnline.addEventListener('click', function(){
-      app.activatePage('order');
-      window.location.hash = '/#order';
-    });
+    app.initLinks(thisHome.dom.links);
   }
 }
 

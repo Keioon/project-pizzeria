@@ -31,21 +31,32 @@
     background-image: url("./../../images/home/pizza-2.jpg");
   }
 
-  .order-online, .book-table{
-    height: 150px;
-    width: 300px;
-    background-size: cover;
-    background-color: crimson;
+  .opening-hours{
+    background: $color-main;
+    flex: 100%;
+    height: 140px;
+    width: 600px;
     margin: 3px;
-    flex: 40%;
     border-radius: $radius;
-    font-family: $font-header;
-    cursor: pointer;
+  }
+}
 
-    h2{
-      position: relative;
-      top: 40px;
-    }
+.order-online, .book-table{
+  height: 150px;
+  width: 300px;
+  background-size: cover;
+  background-color: crimson;
+  margin: 3px;
+  flex: 40%;
+  border-radius: $radius;
+  font-family: $font-header;
+  cursor: pointer;
+
+  a{
+    position: relative;
+    top: 40px;
+    text-decoration: none;
+    color: $color-light;
 
     p{
       position: relative;
@@ -57,7 +68,7 @@
 
     &:hover{
       h2 {
-        transform: translateY(-40px);
+        transform: translateY(-20px);
         opacity: 1;
         transition: 0.7s all;
         
@@ -65,20 +76,11 @@
   
       p {
         visibility: visible;
-        transform: translateY(-20px);
+        transform: translateY(-40px);
         opacity: 1;
         transition: 0.7s all;
       }
     }
-  }
-
-  .opening-hours{
-    background: $color-main;
-    flex: 100%;
-    height: 140px;
-    width: 600px;
-    margin: 3px;
-    border-radius: $radius;
   }
 }
 
@@ -86,7 +88,7 @@
 
 .carousel{
   height: 300px;
-  margin: 50px 10px 0 10px;
+  margin: 100px 10px 10px 10px;
 
   .carousel-item{
     width: 100%;

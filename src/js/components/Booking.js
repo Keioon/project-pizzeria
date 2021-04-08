@@ -119,7 +119,6 @@ class Booking{
       }
       thisBooking.booked[date][hourBlock].push(table);
     }
-    thisBooking.updateDOM();
   }
 
   updateDOM(){
@@ -284,11 +283,6 @@ class Booking{
 
     const url = settings.db.url + '/' +  settings.db.booking;
     
-    //console.log(thisBooking.date);
-    //console.log(thisBooking.hour);
-    //console.log(thisBooking.hoursAmount.value);
-    //console.log(thisBooking.peopleAmount.value);
-    
     const payload ={
       date: thisBooking.datePicker.value,
       hour: thisBooking.hourPicker.value,
@@ -314,8 +308,13 @@ class Booking{
       body: JSON.stringify(payload)
     };
 
-    fetch(url, options);
-    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+    fetch(url, options)
+      .then(function(response){
+        return response.json();
+      }).then(function(parsedResponse){
+        thisBooking.makeBooked(parsedResponse.date, parsedResponse.hour, parsedResponse.duration, parsedResponse.table);
+        thisBooking.updateDOM();
+      });
   }
 }
 

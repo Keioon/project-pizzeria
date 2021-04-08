@@ -23,8 +23,14 @@ export const app = {
     }
 
     thisApp.activatePage(pageMatchingHash);
-    
-    for(let link of thisApp.navLinks){
+
+    thisApp.initLinks(thisApp.navLinks);
+  },
+
+  initLinks: function(links){
+    const thisApp = this;
+
+    for(let link of links){
       link.addEventListener('click', function(event){
         const clickedElement = this;
         event.preventDefault();

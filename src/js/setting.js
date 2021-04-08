@@ -14,8 +14,7 @@ export const select = {
     home: '.home-wrapper',
   },
   home: {
-    order: '.order-online',
-    table: '.book-table',
+    links: '.home-container a',
   },
   all: {
     menuProducts: '#product-list > .product',
