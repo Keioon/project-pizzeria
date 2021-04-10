@@ -19,17 +19,13 @@
   color: $color-light;
   font-family: $font-header;
 
-  h2{
-    text-transform: uppercase;
-  }
-
-  .order-online {
+  /*.order-online {
     background-image: url("./../../images/home/pizza-1.jpg");
   }
 
   .book-table {
     background-image: url("./../../images/home/pizza-2.jpg");
-  }
+  }*/
 
   .opening-hours{
     background: $color-main;
@@ -54,32 +50,55 @@
 
   a{
     position: relative;
-    top: 40px;
     text-decoration: none;
+    display: block;
     color: $color-light;
+    width: 100%;
+    height: 100%;
 
-    p{
-      position: relative;
-      font-family: $font-text;
-      top: 20px;
-      visibility: hidden;
-      font-size: 14px;
+    img{
+      object-fit: cover;
+      width: 100%;
+      border-radius: $radius;
+      height: 100%;
+    }  
+  }
+}
+
+.msg{
+  position: absolute;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+
+  p{
+    position: relative;
+    font-family: $font-text;
+    visibility: hidden;
+    font-size: 14px;
+    top: 20px;
+  }
+
+  h2{
+    position: relative;
+    text-transform: uppercase;
+    top: 40px;
+  }
+
+  &:hover{
+    h2 {
+      transform: translateY(-30px);
+      opacity: 1;
+      transition: 0.7s all;
+      
     }
 
-    &:hover{
-      h2 {
-        transform: translateY(-20px);
-        opacity: 1;
-        transition: 0.7s all;
-        
-      }
-  
-      p {
-        visibility: visible;
-        transform: translateY(-40px);
-        opacity: 1;
-        transition: 0.7s all;
-      }
+    p {
+      visibility: visible;
+      transform: translateY(-30px);
+      opacity: 1;
+      transition: 0.7s all;
     }
   }
 }
