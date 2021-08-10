@@ -1,1 +1,1 @@
-https://agile-plateau-83579.herokuapp.com/#/home
+https://my-pizzeria-project-js.herokuapp.com/
